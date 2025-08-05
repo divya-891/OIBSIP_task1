@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌡️ Temperature Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://image.shutterstock.com/image-photo/white-snow-freezing-blue-tone-260nw-1248901792.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #F5F527;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .converter {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .radio-group {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+
+    .radio-group label {
+      flex: 1;
+      text-align: center;
+    }
+
+    button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e0f7fa;
+      border-left: 5px solid #00796b;
+      font-weight: bold;
+      display: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌡️ Temperature Converter</h1>
+
+  <div class="converter">
+    <label for="tempInput">Enter Temperature:</label>
+    <input type="number" id="tempInput" placeholder="e.g., 100" />
+
+    <label>Select Unit:</label>
+    <div class="radio-group">
+      <label><input type="radio" name="unit" value="C" checked> °C</label>
+      <label><input type="radio" name="unit" value="F"> °F</label>
+      <label><input type="radio" name="unit" value="K"> K</label>
+    </div>
+
+    <button onclick="convertTemp()">🔁 Convert</button>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    function convertTemp() {
+      const temp = parseFloat(document.getElementById('tempInput').value);
+      const unit = document.querySelector('input[name="unit"]:checked').value;
+      const resultBox = document.getElementById('result');
+
+      if (isNaN(temp)) {
+        resultBox.style.display = "block";
+        resultBox.innerHTML = "❌ Please enter a valid number.";
+        return;
+      }
+
+      let celsius, fahrenheit, kelvin;
+
+      if (unit === "C") {
+        celsius = temp;
+        fahrenheit = (temp * 9 / 5) + 32;
+        kelvin = temp + 273.15;
+      } else if (unit === "F") {
+        celsius = (temp - 32) * 5 / 9;
+        fahrenheit = temp;
+        kelvin = (temp - 32) * 5 / 9 + 273.15;
+      } else if (unit === "K") {
+        celsius = temp - 273.15;
+        fahrenheit = (temp - 273.15) * 9 / 5 + 32;
+        kelvin = temp;
+      }
+
+      resultBox.style.display = "block";
+      resultBox.innerHTML = `
+        🌐 Converted Temperatures:<br>
+        🔹 Celsius: ${celsius.toFixed(2)} °C<br>
+        🔹 Fahrenheit: ${fahrenheit.toFixed(2)} °F<br>
+        🔹 Kelvin: ${kelvin.toFixed(2)} K
+      `;
+    }
+  </script>
+
+</body>
+</html>
